@@ -36,6 +36,7 @@
 4.  **Start Service:** Click "Start Service". A "DND Sync Running" notification should appear in the status bar (some models might not show this).
 5.  **⚠️ (Important) Prevent Background Killing:**
     * **Enable Accessibility Service:** Go to your phone's **Settings -> Accessibility -> Downloaded Apps**, find **"DND Sync Keep Alive"** (or similar name), and enable it.
+    * The battery should be set to have no restrictions and automatic startup should be allowed.
     * This ensures the app is not killed by the system in the background.
 
 #### 2. Watch Setup
@@ -77,6 +78,7 @@
 4.  **启动服务：** 点击按钮启动服务，通知栏应出现“DND Sync 正在运行”的提示（部分机型可能不会显示，但这不影响功能）。
 5.  **⚠️ (重要) 防杀后台设置：**
     * **开启无障碍保活：** 前往手机的 **设置 -> 更多设置 -> 无障碍 -> 下载的应用**，找到 **"DND Sync 保活服务"** 并开启。
+    * 需要设置电池无限制和允许自动启动。
     * 这能确保 App 在后台不被系统杀掉，保证同步稳定。
 
 #### 2. 手表端设置

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">DndSync</string>
+    <string name="accessibility_desc">Used to keep the DND Sync backend running</string>
+    <string name="notification_title">DND Syncing</string>
+    <string name="contentText">Watch signal is being monitored...</string>
+    <string name="watchExample">example: Galaxy Watch7</string>
+    <string name="permissionName">Bluetooth and DND permissions need to be granted</string>
+    <string name="saveDeviceName">Save device name</string>
+    <string name="saveTarget">Save target: </string>
+    <string name="allDevice">All devices</string>
+    <string name="checkPermissionAndRun">Click to check permissions and run</string>
+    <string name="allReady">The permissions are ready! Just keep the backend running.</string>
+</resources>

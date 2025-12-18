@@ -1,0 +1,5 @@
+<resources>
+    <style name="Theme.DndSync" parent="android:Theme.DeviceDefault.Light.NoActionBar">
+        <item name="android:colorPrimary">@android:color/holo_blue_light</item>
+    </style>
+</resources>

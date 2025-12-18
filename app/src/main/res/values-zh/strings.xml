@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">DndSync</string>
+    <string name="accessibility_desc">用于保持DND Sync后台运行</string>
+    <string name="notification_title">勿扰同步中</string>
+    <string name="contentText">正在监听手表信号...</string>
+    <string name="watchExample">例如: Galaxy Watch7</string>
+    <string name="permissionName">DND Sync 蓝牙版\n需要授予蓝牙和勿扰权限</string>
+    <string name="saveDeviceName">保存设备名</string>
+    <string name="saveTarget">"已保存目标: "</string>
+    <string name="allDevice">所有设备</string>
+    <string name="checkPermissionAndRun">点击检查权限并运行</string>
+    <string name="allReady">权限已就绪！保持后台运行即可。</string>
+</resources>

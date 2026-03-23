@@ -2,11 +2,14 @@
     <string name="app_name">DndSync</string>
     <string name="notification_title">勿扰同步中</string>
     <string name="contentText">正在监听手机信号...</string>
-    <string name="tvText">DND 服务端\n点击开启服务</string>
+    <string name="tvText">点击开启服务</string>
     <string name="openService">启动监听服务</string>
     <string name="examplePhone">例如: Xiaomi 15</string>
     <string name="saveDevice">保存设备名</string>
     <string name="saveTarget">"已保存目标: "</string>
     <string name="addDevice">所有设备</string>
     <string name="serviceOnline">服务已启动</string>
+    <string name="connectError">连接手机失败，无法同步</string>
+    <string name="listenThread">成功创建监听线程</string>
+    <string name="vibrateNotification">收到同步请求时震动</string>
 </resources>

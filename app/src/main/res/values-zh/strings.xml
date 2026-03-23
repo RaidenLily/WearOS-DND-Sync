@@ -10,4 +10,6 @@
     <string name="allDevice">所有设备</string>
     <string name="checkPermissionAndRun">点击检查权限并运行</string>
     <string name="allReady">权限已就绪！保持后台运行即可。</string>
+    <string name="connectError">连接手表失败，无法同步</string>
+    <string name="listenThread">成功创建监听线程</string>
 </resources>

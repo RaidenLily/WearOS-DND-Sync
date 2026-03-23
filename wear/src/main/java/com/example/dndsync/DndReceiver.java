@@ -10,7 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.OutputStream;
 import java.util.Set;
@@ -76,7 +79,9 @@ public class DndReceiver extends BroadcastReceiver {
                     return;
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Connect failed to " + device.getName() + ": " + e.getMessage());
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    Toast.makeText(context, context.getString(R.string.connectError), Toast.LENGTH_SHORT).show();
+                });
             }
         }
     }

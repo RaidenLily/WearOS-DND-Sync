@@ -10,9 +10,16 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +27,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class BluetoothServerService extends Service {
     private static final String TAG = "DndServer";
+
+    private volatile boolean isRunning = false;
+    private Thread listeningThread;
 
     public static AtomicInteger remoteChangeCount = new AtomicInteger(0);
 
@@ -37,8 +47,19 @@ public class BluetoothServerService extends Service {
                 .build();
         startForeground(1, notification);
 
-        // 开启监听线程
-        new Thread(this::startListening).start();
+        if (!isRunning || (listeningThread != null && !listeningThread.isAlive())) {
+            isRunning = true;
+            listeningThread = new Thread(() -> {
+                startListening();
+                // 线程结束时（比如异常退出），记得把 isRunning 置为 false
+                // 这样下次 startService 才能重启它
+                isRunning = false;
+            });
+            listeningThread.start();
+            new Handler(Looper.getMainLooper()).post(() -> {
+                Toast.makeText(getApplicationContext(), getString(R.string.listenThread), Toast.LENGTH_SHORT).show();
+            });
+        }
         return START_STICKY;
     }
 
@@ -88,7 +109,11 @@ public class BluetoothServerService extends Service {
                 if (currentState == state) {
                     return;
                 }
+                SharedPreferences prefs = getSharedPreferences("DndSyncSettings", MODE_PRIVATE);
 
+                if (prefs.getBoolean("enable_vibrate", true)) {
+                    triggerVibration(state != NotificationManager.INTERRUPTION_FILTER_ALL);
+                }
                 nm.setInterruptionFilter(state);
                 remoteChangeCount.incrementAndGet();
             }
@@ -110,4 +135,41 @@ public class BluetoothServerService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) { return null; }
+
+    /**
+     * 根据勿扰状态触发不同的震动反馈
+     * @param isDndOn true表示开启勿扰，false表示关闭勿扰
+     */
+    private void triggerVibration(boolean isDndOn) {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                // Android 8.0 以上的高级震动 API，支持控制强度 (Galaxy Watch 完美支持)
+                if (isDndOn) {
+                    // 【开启勿扰】沉稳长震：等待0ms，震动300ms
+                    long[] timings = {0, 300};
+                    // 强度：0(停止)，200(较强，最大255)
+                    int[] amplitudes = {0, 200};
+                    VibrationEffect effect = VibrationEffect.createWaveform(timings, amplitudes, -1); // -1表示不重复
+                    vibrator.vibrate(effect);
+                } else {
+                    // 【关闭勿扰】轻快双击：等待0, 震动80, 停顿100, 震动80
+                    long[] timings = {0, 80, 100, 80};
+                    // 强度：稍微轻快一点 (150)
+                    int[] amplitudes = {0, 150, 0, 150};
+                    VibrationEffect effect = VibrationEffect.createWaveform(timings, amplitudes, -1);
+                    vibrator.vibrate(effect);
+                }
+            } else {
+                // 兼容老版本 Android 的普通震动
+                if (isDndOn) {
+                    vibrator.vibrate(300); // 震动300ms
+                } else {
+                    long[] pattern = {0, 80, 100, 80};
+                    vibrator.vibrate(pattern, -1); // 按节奏震动，不重复
+                }
+            }
+        }
+    }
 }

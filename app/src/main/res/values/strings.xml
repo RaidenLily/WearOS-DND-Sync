@@ -10,4 +10,6 @@
     <string name="allDevice">All devices</string>
     <string name="checkPermissionAndRun">Click to check permissions and run</string>
     <string name="allReady">The permissions are ready! Just keep the backend running.</string>
+    <string name="connectError">Connect watch fail, can\'t sync</string>
+    <string name="listenThread">Create listening thread success</string>
 </resources>

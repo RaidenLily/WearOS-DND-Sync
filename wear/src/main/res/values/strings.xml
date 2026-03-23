@@ -2,11 +2,14 @@
     <string name="app_name">DndSync</string>
     <string name="notification_title">Do Not Disturb Syncing</string>
     <string name="contentText">The phone signal is being monitored...</string>
-    <string name="tvText">DND \n Click to activate service</string>
+    <string name="tvText">Click to activate service</string>
     <string name="openService">Start the listening service</string>
     <string name="examplePhone">E.g., Xiaomi 15</string>
     <string name="saveDevice">Save device name</string>
     <string name="saveTarget">"Saved target: "</string>
     <string name="addDevice">all device</string>
     <string name="serviceOnline">Service has started</string>
+    <string name="connectError">Connect phone fail, can\'t sync</string>
+    <string name="listenThread">Create listening thread success</string>
+    <string name="vibrateNotification">Vibrate when receiving synchronization request</string>
 </resources>

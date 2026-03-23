@@ -11,8 +11,11 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +42,6 @@ public class BluetoothServerService extends Service {
         startForeground(1, notification);
 
         if (!isRunning || (listeningThread != null && !listeningThread.isAlive())) {
-            Log.d(TAG, "Starting new listening thread...");
             isRunning = true;
             listeningThread = new Thread(() -> {
                 startListening();
@@ -48,10 +50,9 @@ public class BluetoothServerService extends Service {
                 isRunning = false;
             });
             listeningThread.start();
-        } else {
-            // 这就是“无障碍服务频繁启动”时会发生的情况
-            // 我们直接忽略，什么都不做，只是打印个日志
-            Log.d(TAG, "Service already running, ignore start request.");
+            new Handler(Looper.getMainLooper()).post(() -> {
+                Toast.makeText(getApplicationContext(), getString(R.string.listenThread), Toast.LENGTH_SHORT).show();
+            });
         }
         return START_STICKY;
     }
